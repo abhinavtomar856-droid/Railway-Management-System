@@ -26,7 +26,6 @@ public class Main {
                         "root",
                         "admin");
 
-                // 1. ADD TRAIN
                 if (choice == 1) {
                     System.out.print("Train Number: ");
                     int num = sc.nextInt();
@@ -58,7 +57,6 @@ public class Main {
                     System.out.println("Train added!");
                 }
 
-                // 2. VIEW TRAINS
                 else if (choice == 2) {
                     Statement st = con.createStatement();
                     ResultSet rs = st.executeQuery("SELECT * FROM trains");
@@ -73,7 +71,6 @@ public class Main {
                     }
                 }
 
-                // 3. BOOK TICKET
                 else if (choice == 3) {
                     System.out.print("Passenger Name: ");
                     String pname = sc.nextLine();
@@ -118,8 +115,7 @@ public class Main {
                     }
                 }
 
-                // 4. VIEW BOOKINGS
-                else if (choice == 4) {
+                if (choice == 4) {
                     Statement st = con.createStatement();
                     ResultSet rs = st.executeQuery("SELECT * FROM bookings");
 
@@ -132,7 +128,6 @@ public class Main {
                     }
                 }
 
-                // 5. SEARCH TRAIN
                 else if (choice == 5) {
                     System.out.print("Enter Train Number: ");
                     int tno = sc.nextInt();
@@ -154,7 +149,6 @@ public class Main {
                     }
                 }
 
-                // 6. CANCEL TICKET
                 else if (choice == 6) {
                     System.out.print("Enter Booking ID to cancel: ");
                     int id = sc.nextInt();

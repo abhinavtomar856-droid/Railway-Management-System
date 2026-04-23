@@ -121,7 +121,6 @@ public class TrainGUI extends JFrame implements ActionListener {
         try {
             Connection con = connect();
 
-            // ADD TRAIN
             if (e.getSource() == addBtn) {
                 PreparedStatement ps = con.prepareStatement(
                         "INSERT INTO trains VALUES (?, ?, ?, ?, ?)");
@@ -153,7 +152,6 @@ public class TrainGUI extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(this, data);
             }
 
-            // BOOK TICKET
             else if (e.getSource() == bookBtn) {
                 int trainNo = Integer.parseInt(t1.getText());
                 int seats = Integer.parseInt(t5.getText());
@@ -189,7 +187,6 @@ public class TrainGUI extends JFrame implements ActionListener {
                 }
             }
 
-            // VIEW BOOKINGS
             else if (e.getSource() == viewBookBtn) {
                 Statement st = con.createStatement();
                 ResultSet rs = st.executeQuery("SELECT * FROM bookings");
@@ -205,7 +202,6 @@ public class TrainGUI extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(this, data);
             }
 
-            // SEARCH TRAIN
             else if (e.getSource() == searchBtn) {
                 int trainNo = Integer.parseInt(t1.getText());
 
@@ -228,7 +224,6 @@ public class TrainGUI extends JFrame implements ActionListener {
                 }
             }
 
-            // CANCEL TICKET
             else if (e.getSource() == cancelBtn) {
                 int id = Integer.parseInt(t6.getText());
 
