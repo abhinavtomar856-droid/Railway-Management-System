@@ -13,7 +13,9 @@ public class Main {
             System.out.println("2. View Trains");
             System.out.println("3. Book Ticket");
             System.out.println("4. View Bookings");
-            System.out.println("5. Exit");
+            System.out.println("5. Search Train");
+            System.out.println("6. Cancel Ticket");
+            System.out.println("7. Exit");
             System.out.print("Enter choice: ");
             choice = sc.nextInt();
             sc.nextLine();
@@ -24,6 +26,7 @@ public class Main {
                         "root",
                         "admin");
 
+                // 1. ADD TRAIN
                 if (choice == 1) {
                     System.out.print("Train Number: ");
                     int num = sc.nextInt();
@@ -53,9 +56,9 @@ public class Main {
 
                     ps.executeUpdate();
                     System.out.println("Train added!");
-
                 }
 
+                // 2. VIEW TRAINS
                 else if (choice == 2) {
                     Statement st = con.createStatement();
                     ResultSet rs = st.executeQuery("SELECT * FROM trains");
@@ -70,6 +73,7 @@ public class Main {
                     }
                 }
 
+                // 3. BOOK TICKET
                 else if (choice == 3) {
                     System.out.print("Passenger Name: ");
                     String pname = sc.nextLine();
@@ -114,15 +118,57 @@ public class Main {
                     }
                 }
 
+                // 4. VIEW BOOKINGS
                 else if (choice == 4) {
                     Statement st = con.createStatement();
                     ResultSet rs = st.executeQuery("SELECT * FROM bookings");
 
                     while (rs.next()) {
+                        System.out.println("Booking ID: " + rs.getInt(1));
                         System.out.println("Name: " + rs.getString(2));
                         System.out.println("Train No: " + rs.getInt(3));
                         System.out.println("Seats: " + rs.getInt(4));
                         System.out.println("-------------------");
+                    }
+                }
+
+                // 5. SEARCH TRAIN
+                else if (choice == 5) {
+                    System.out.print("Enter Train Number: ");
+                    int tno = sc.nextInt();
+
+                    PreparedStatement ps = con.prepareStatement(
+                            "SELECT * FROM trains WHERE trainNumber=?");
+                    ps.setInt(1, tno);
+
+                    ResultSet rs = ps.executeQuery();
+
+                    if (rs.next()) {
+                        System.out.println("Train Found:");
+                        System.out.println("Name: " + rs.getString(2));
+                        System.out.println("Source: " + rs.getString(3));
+                        System.out.println("Destination: " + rs.getString(4));
+                        System.out.println("Seats: " + rs.getInt(5));
+                    } else {
+                        System.out.println("Train not found!");
+                    }
+                }
+
+                // 6. CANCEL TICKET
+                else if (choice == 6) {
+                    System.out.print("Enter Booking ID to cancel: ");
+                    int id = sc.nextInt();
+
+                    PreparedStatement ps = con.prepareStatement(
+                            "DELETE FROM bookings WHERE id=?");
+                    ps.setInt(1, id);
+
+                    int rows = ps.executeUpdate();
+
+                    if (rows > 0) {
+                        System.out.println("Ticket Cancelled!");
+                    } else {
+                        System.out.println("Invalid ID!");
                     }
                 }
 
@@ -133,7 +179,7 @@ public class Main {
                 System.out.println(e);
             }
 
-        } while (choice != 5);
+        } while (choice != 7);
 
         sc.close();
     }
